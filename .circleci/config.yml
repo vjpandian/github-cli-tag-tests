@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  gh-cli-tests:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+
+workflows:
+  gh-cli-tests-workflow: 
+    jobs:
+      - gh-cli-tests
