@@ -14,7 +14,7 @@ jobs:
       - checkout
       - run:
           name: setup Github CLI
-          command: echo "$GH_RELEASE_PAT" > /tmp/gh_token && env -u GH_TOKEN gh auth login --with-token < /tmp/gh_token && rm /tmp/gh_token
+          command: echo "$GH_RELEASE_PAT" > /tmp/gh_token && env -u GH_TOKEN gh auth login --with-token < /tmp/gh_token && rm /tmp/gh_token && gh auth status
       - when:
           condition:
             and:
