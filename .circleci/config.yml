@@ -3,14 +3,16 @@ version: 2.1
 jobs:
   gh-cli-tests:
     docker:
-      - image: cimg/base:current
+      - image: ghcr.io/supportpal/github-gh-cli:2.72.0
+    resource_class: small
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: setup Github CLI
+          command: echo "$GH_TOKEN" > /tmp/gh_token && env -u GH_TOKEN gh auth login --with-token < /tmp/gh_token && rm /tmp/gh_token
 
 workflows:
   gh-cli-tests-workflow: 
     jobs:
-      - gh-cli-tests
+      - gh-cli-tests:
+          context: vijay-personal
