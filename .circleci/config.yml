@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  create-release:
+    type: boolean
+    default: false
+
 jobs:
   gh-cli-tests:
     docker:
@@ -10,9 +15,14 @@ jobs:
       - run:
           name: setup Github CLI
           command: echo "$GH_RELEASE_PAT" > /tmp/gh_token && env -u GH_TOKEN gh auth login --with-token < /tmp/gh_token && rm /tmp/gh_token
-      - run: 
-          name: Generate a new release from main
-          command: gh release create v0.0.1 --notes "CircleCI Automated Release Creation test" --generate-notes --latest
+      - when:
+          condition:
+            and:
+             - equal: [true, <<pipeline.parameters.create-release>>]
+          steps:
+            - run:
+                name: Generate a new release from main
+                command: gh release create v0.0.1 --notes "CircleCI Automated Release Creation test" --generate-notes --latest
 
 workflows:
   gh-cli-tests-workflow: 
