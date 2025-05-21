@@ -27,7 +27,4 @@ jobs:
 workflows:
   gh-cli-tests-workflow: 
     jobs:
-      - gh-cli-tests:
-          filters:
-              tags:
-                only: /.*/
+      - gh-cli-tests
